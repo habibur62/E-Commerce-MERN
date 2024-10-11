@@ -27,7 +27,11 @@ export default function Login() {
             
         })
     }
-    console.log(data);
+    
+    const hanldeSubmit = (e) =>{
+        e.preventDefault()
+    }
+
 
   return (
     <section id='login'>
@@ -37,7 +41,7 @@ export default function Login() {
                     <img src={logInIcon} alt="login icon"  />
                 </div>
 
-                <form  className='pt-8'>
+                <form  className='pt-6 flex flex-col gap-2 ' onSubmit={hanldeSubmit}>
                     <div className='grid'>
                         <label htmlFor="">Email : </label>
                         <div className='bg-slate-100 p-2'>

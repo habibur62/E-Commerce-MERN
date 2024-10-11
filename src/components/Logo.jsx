@@ -3,8 +3,8 @@ import React from 'react'
 export default function Logo({w,h}) {
   return (
 
-<svg fill="#000000" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-	 viewBox="0 0 180.1 180.1" xml:space="preserve" width={w} height={h}>
+<svg fill="#000000" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" 
+	 viewBox="0 0 180.1 180.1" width={w} height={h}>
 <g>
 	<path d="M91.2,42.4c0,0-8.4-1.3-14.8,5.4c-6.2,6.5-5.7,15.3-5.7,15.3l5.6-8c0,0,0.7-0.5,0.4-1.5c-0.4-0.9-0.4-1.2-0.4-1.2v-1.5
 		l24.2-0.2c0,0,6.5-0.3,6.5,6.4s-4.5,7.1-4.5,7.1s7,1.5,7,9.2c0,7.9-8.3,10-8.3,10L83,83.2c0,0-1.5-1.2,0.1-1.9
