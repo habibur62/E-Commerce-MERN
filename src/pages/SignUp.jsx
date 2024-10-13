@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import logInIcon from '../assest/signin.gif'
 import { FaEyeSlash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import imageToBase64 from '../helpers/imageToBase64';
+import SummaryApi from '../common';
+import { toast } from 'react-toastify';
 
 export default function SignUp() {
 
@@ -18,6 +20,8 @@ export default function SignUp() {
       confirmpassword: "",
       profilePic: ""
   })
+
+  const navigate = useNavigate();
 
   const handleOnChange = (e) =>{
       const {name, value} = e.target
@@ -45,8 +49,45 @@ export default function SignUp() {
         
     })
   }
-  const hanldeSubmit = (e) =>{
+
+  const hanldeSubmit = async(e) =>{
     e.preventDefault()
+
+    if(data.password === data.confirmpassword){
+
+        try {
+            const dataResponse = await fetch(SummaryApi.signUp.url, {
+                method: SummaryApi.signUp.method,
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+        
+            if (!dataResponse.ok) {
+                throw new Error(`HTTP error! status: ${dataResponse.status}`);
+            }
+        
+            const result = await dataResponse.json();
+            if(result.success){
+                toast.success(result.message)
+                navigate("/login");
+            }
+            if(result.error){
+                toast.error(result.message)
+            }
+             //toast message
+
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+        
+        
+
+    }else{
+        console.log("please match password")
+    }
+
   }
 
   return (
@@ -119,8 +160,8 @@ export default function SignUp() {
                     <div className='bg-slate-100 p-2 flex items-center '>
                         <input type={showConfirmPassword ? "text" : "password"}
                              placeholder='enter conform password...'
-                             name='showConfirmPassword'
-                             value={data.showConfirmPassword}
+                             name='confirmpassword'
+                             value={data.confirmpassword}
                              onChange={handleOnChange}
                              className='w-full h-full outline-none bg-transparent' required />
                         <div className='cursor-pointer' onClick={()=>setShowConfirmPassword(!showConfirmPassword)}>
