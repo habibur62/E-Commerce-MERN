@@ -4,9 +4,43 @@ import { FaSearch } from "react-icons/fa";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import SummaryApi from '../common';
+import { toast } from 'react-toastify';
+import { setUserDetails } from '../store/userSlice';
 
 
 export default function Header() {
+    const user = useSelector(state => state?.user?.user)
+   const dispatch = useDispatch()
+
+     const handleLogOut = async () =>{
+        try {
+            const response  = await fetch(SummaryApi.logout_user.url,{
+                method: SummaryApi.logout_user.method,
+                credentials: 'include', // Ensure cookies are included
+            })
+            const data = await response.json();
+             console.log(data);
+
+             if (data.success) {
+                toast.success(data.message);
+                dispatch(setUserDetails(null)); // Clear user details in Redux state
+            } else {
+                toast.error(data.message || "Logout failed!");
+            }
+
+        } catch (error) {
+              console.error("Error during logout:", error);
+        toast.error("An error occurred during logout.");
+        }
+                
+    }
+
+    
+
+   
+
   return (
     <header className='h-16 shadow-md bg-white '>
         <div className='h-full container flex items-center justify-between mx-auto px-4'>
@@ -31,10 +65,27 @@ export default function Header() {
                      </div>
                 </div>
                 <div className='text-3xl cursor-pointer'>
-                    <FaRegUserCircle/>
+                     {
+                        user?.profilePic ? (
+                            <img src={user.profilePic} alt={user?.name} className='w-10 h-10 rounded-full'/>
+                        ) :(
+                            <FaRegUserCircle/>
+                        )
+                    } 
+
                 </div>
                 <div>
-                    <Link to={"/login"} className='px-3 py-1 bg-red-600 hover:bg-red-700 rounded-full text-white '>Login</Link>
+                    {
+                        user?._id ? (
+                            <button onClick={handleLogOut} className='px-3 py-1 bg-red-600 hover:bg-red-700 rounded-full text-white '>LogOut</button>
+                        ) :
+                        (
+                            <Link to={"/login"} className='px-3 py-1 bg-red-600 hover:bg-red-700 rounded-full text-white '>Login</Link>
+
+                        )
+                        
+                    } 
+
                 </div>
             </div>
         </div>
