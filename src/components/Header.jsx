@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Logo from './Logo'
 import { FaSearch } from "react-icons/fa";
 import { FaRegUserCircle } from "react-icons/fa";
@@ -13,7 +13,10 @@ import { setUserDetails } from '../store/userSlice';
 export default function Header() {
     const user = useSelector(state => state?.user?.user)
    const dispatch = useDispatch()
+    const [menuDisplay, setMenuDisplay] = useState(false)
 
+
+   //logout --------------------------------------------
      const handleLogOut = async () =>{
         try {
             const response  = await fetch(SummaryApi.logout_user.url,{
@@ -64,7 +67,8 @@ export default function Header() {
                         <p className='text-sm'>0</p>
                      </div>
                 </div>
-                <div className='text-3xl cursor-pointer'>
+                <div className='relative flex justify-center'>
+                    <div className='text-3xl cursor-pointer' onClick={()=> setMenuDisplay(!menuDisplay)}>
                      {
                         user?.profilePic ? (
                             <img src={user.profilePic} alt={user?.name} className='w-10 h-10 rounded-full'/>
@@ -72,6 +76,17 @@ export default function Header() {
                             <FaRegUserCircle/>
                         )
                     } 
+                     </div>
+                     {
+                        menuDisplay && (
+                            <div className='absolute bg-white  bottom-0 top-11 h-fit p-2 shadow-lg rounded '>
+                             <nav> 
+                              <Link to ={"admin-panel"} className='whitespace-nowrap p-4 hidden md:block ' onClick={()=> setMenuDisplay(!menuDisplay)}>Admin Panel</Link>
+                              </nav>
+                             </div>
+                        )
+                     
+                     }
 
                 </div>
                 <div>
