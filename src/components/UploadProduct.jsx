@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
-import { IoMdClose } from "react-icons/io";
+import { IoIosNavigate, IoMdClose } from "react-icons/io";
 import productCategory from '../helpers/productCategory';
 import { FaCloudUploadAlt } from "react-icons/fa";
 import uploadImage from '../helpers/uploadImage';
 import DisplayImage from './DisplayImage';
 import { MdOutlineDeleteOutline } from "react-icons/md";
-
+import SummaryApi from '../common';
+import { toast } from 'react-toastify';
+import {useNavigate} from 'react-router-dom'
 
 export default function UploadProduct({onclose}) {
+    const navigate = useNavigate();
     const [data, setData] = useState({
         productName : '',
         brandName : '',
@@ -19,9 +22,6 @@ export default function UploadProduct({onclose}) {
     })
     const [fullScreenImage, setFullScreenImage] = useState("")
    const [openFullScreenImage, setOpenFullScreenImage] = useState(false)
-
-   console.log("data",  data)
-
 
     const handleOnChange = (e) =>{
         const {name, value} = e.target
@@ -59,8 +59,32 @@ export default function UploadProduct({onclose}) {
 
     }
 
-    const handleUploadProduct = (e) =>{
+    const handleUploadProduct = async (e) =>{
         e.preventDefault()
+        try {
+            const dataResponse= await fetch(SummaryApi.productUpload.url, {
+                method: SummaryApi.productUpload.method,
+                credentials: 'include', 
+                headers: {
+                    "content-type" : "application/json"
+                },
+                body : JSON.stringify(data)
+            })
+
+            const dataApi = await dataResponse.json()
+
+            if(dataApi.success){
+                toast.success(dataApi.message)
+                onclose()
+                
+            }
+            if(dataApi.error){
+                toast.error(dataApi.message)
+            }
+
+        } catch (error) {
+              console.error("Error fetching data:", error);
+        }
     }
 
 
