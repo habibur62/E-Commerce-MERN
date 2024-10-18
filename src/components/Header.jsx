@@ -3,17 +3,18 @@ import Logo from './Logo'
 import { FaSearch } from "react-icons/fa";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import SummaryApi from '../common';
 import { toast } from 'react-toastify';
 import { setUserDetails } from '../store/userSlice';
-
+import ROLE from '../common/role'
 
 export default function Header() {
     const user = useSelector(state => state?.user?.user)
    const dispatch = useDispatch()
     const [menuDisplay, setMenuDisplay] = useState(false)
+    const navigate = useNavigate()
 
 
    //logout --------------------------------------------
@@ -24,12 +25,12 @@ export default function Header() {
                 credentials: 'include', // Ensure cookies are included
             })
             const data = await response.json();
-             console.log(data);
 
              if (data.success) {
                 toast.success(data.message);
                 dispatch(setUserDetails(null)); // Clear user details in Redux state
-            } else {
+                navigate("/")
+                } else {
                 toast.error(data.message || "Logout failed!");
             }
 
@@ -68,23 +69,32 @@ export default function Header() {
                      </div>
                 </div>
                 <div className='relative flex justify-center'>
-                    <div className='text-3xl cursor-pointer' onClick={()=> setMenuDisplay(!menuDisplay)}>
-                     {
-                        user?.profilePic ? (
+                    {
+                        user?._id &&(
+                            <div className='text-3xl cursor-pointer' onClick={()=> setMenuDisplay(!menuDisplay)}>
+                           {
+                             user?.profilePic ? (
                             <img src={user.profilePic} alt={user?.name} className='w-10 h-10 rounded-full'/>
-                        ) :(
-                            <FaRegUserCircle/>
+                              ) :(
+                              <FaRegUserCircle/>
+                              )
+                             } 
+                            </div>
+
+                          )
+                    }
+                    
+                     {  
+                        user?.role === ROLE.ADMIN && (
+                            menuDisplay && (
+                                <div className='absolute bg-white  bottom-0 top-11 h-fit p-2 shadow-lg rounded '>
+                                 <nav> 
+                                  <Link to ={"admin-panel"} className='whitespace-nowrap p-4 hidden md:block ' onClick={()=> setMenuDisplay(!menuDisplay)}>Admin Panel</Link>
+                                  </nav>
+                                 </div>
+                            )
                         )
-                    } 
-                     </div>
-                     {
-                        menuDisplay && (
-                            <div className='absolute bg-white  bottom-0 top-11 h-fit p-2 shadow-lg rounded '>
-                             <nav> 
-                              <Link to ={"admin-panel"} className='whitespace-nowrap p-4 hidden md:block ' onClick={()=> setMenuDisplay(!menuDisplay)}>Admin Panel</Link>
-                              </nav>
-                             </div>
-                        )
+
                      
                      }
 
