@@ -7,10 +7,8 @@ import DisplayImage from './DisplayImage';
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import SummaryApi from '../common';
 import { toast } from 'react-toastify';
-import {useNavigate} from 'react-router-dom'
 
-export default function UploadProduct({onclose}) {
-    const navigate = useNavigate();
+export default function UploadProduct({onclose, callProducts}) {
     const [data, setData] = useState({
         productName : '',
         brandName : '',
@@ -76,7 +74,8 @@ export default function UploadProduct({onclose}) {
             if(dataApi.success){
                 toast.success(dataApi.message)
                 onclose()
-                
+                callProducts
+
             }
             if(dataApi.error){
                 toast.error(dataApi.message)
@@ -156,8 +155,7 @@ export default function UploadProduct({onclose}) {
                                     
                                  }/>
                                  <div onClick={()=>handleDeleteImage(index)} className='absolute group-hover:block hidden bottom-0 right-0 text-white cursor-pointer  bg-red-600 p-1 rounded-full ' >
-                                    <MdOutlineDeleteOutline />                                   
-
+                                    <MdOutlineDeleteOutline /> 
                                  </div>
                                 </div>
                             )
