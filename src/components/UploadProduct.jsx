@@ -168,6 +168,7 @@ export default function UploadProduct({onclose, callProducts}) {
 
         </div>
         {/***display product */}
+        
         {
              openFullScreenImage&&
             <DisplayImage imgUrl={fullScreenImage} onClose={()=>{setOpenFullScreenImage(false)}} />

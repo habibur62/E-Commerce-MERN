@@ -9,6 +9,7 @@ function AllProducts() {
   const [openUploadProduct, setopenuploadProduct] = useState(false)
   const [allProduct, setAllProduct] = useState([])
   const [openEditProduct, setOpenEditProduct] = useState(false);
+  const [editProductItem , setEditProductItem] = useState('')
 
   const fetchAllProduct = async () =>{
       try {
@@ -36,7 +37,7 @@ function AllProducts() {
 
   return (
     <>
-    <div className='bg-white py-4 px-4 flex justify-between items-center'>
+    <div className=' bg-white py-4 px-4 flex justify-between items-center'>
       <h2 className='font-bold text-lg '>All Products</h2>
       <button onClick={()=>setopenuploadProduct(!openUploadProduct)} className='border-2 border-red-600 py-2 px-4 rounded-full hover:bg-red-600 hover:text-white transition-all '>Upload Product</button>
     </div>
@@ -74,18 +75,23 @@ function AllProducts() {
                 <td>{moment(product.createdAtmoment).format('LL')}</td>
                 <td>{product.description}</td>
 
-                <td><button className='bg-green-300 p-2 rounded-full hover:bg-green-400 hover:text-white' onClick={()=>setOpenEditProduct(!openEditProduct)} >
-                      
+                <td><button  onClick={()=>{
+                  setOpenEditProduct(!openEditProduct)
+                  setEditProductItem(product)
+                }}  
+                className='bg-green-300 p-2 rounded-full hover:bg-green-400 hover:text-white'>
                     <CiEdit />
-                  </button></td>
+                  </button>
+
+                  </td>
+                
               </tr>
             )
           })
         }
         </tbody>
       </table>
-
-
+      
 
 
     {
@@ -94,11 +100,12 @@ function AllProducts() {
       )
     }
     {
-      openEditProduct && (
-        <EditProduct onClose={()=>setOpenEditProduct(!openEditProduct)}/>
-      )
+      openEditProduct &&(
+        <EditProduct editProduct={editProductItem} closeEdti={()=>setOpenEditProduct(!openEditProduct)} callProduct={fetchAllProduct()} />
+
+    )
     }
-    
+   
 
     </>
   )
