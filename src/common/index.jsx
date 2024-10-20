@@ -37,7 +37,15 @@ const SummaryApi = {
     updateProducts : {
         url : `${backendDomin}/api/update-product`,
         method : "put"
+    },
+    categoryProduct : {
+        url : `${backendDomin}/api/get-categoryProduct`,
+        method : "get"
     }
+
+
+
+
 
 }
 

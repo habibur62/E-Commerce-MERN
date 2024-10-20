@@ -10,7 +10,14 @@ const productCategory =[
     },
     {
         id: 4, lavel:"Mobiles", value: "mobiles"
+    },
+    {
+        id: 5, lavel:"Mouse", value: "mouse"
+    },
+    {
+        id: 6, lavel:"Printer", value: "printer"
     }
+
 ]
 
 export default productCategory
