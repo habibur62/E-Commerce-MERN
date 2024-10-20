@@ -1,6 +1,6 @@
 const productCategory =[
     {
-        id: 1, lavel:"Airpodes", value: "airpodes"
+        id: 1, lavel:"Airdopes", value: "airdopes"
     },
     {
         id: 2, lavel:"Camera", value: "camera"

@@ -97,15 +97,15 @@ export default function UploadProduct({onclose, callProducts}) {
             
         <form className='grid' onSubmit={handleUploadProduct}>
             <label htmlFor="productName">Product Name : </label>
-            <input type="text" id='productName'name='productName' placeholder='Enter product name...' value={data.productName} onChange={handleOnChange}
+            <input required type="text" id='productName'name='productName' placeholder='Enter product name...' value={data.productName} onChange={handleOnChange}
             className='bg-slate-200 p-2 rounded border '
             />
             <label htmlFor="brandName">Brand Name : </label>
-            <input type="text" id='brandName' name='brandName' placeholder='Enter product brand...' value={data.brandName} onChange={handleOnChange}
+            <input required type="text" id='brandName' name='brandName' placeholder='Enter product brand...' value={data.brandName} onChange={handleOnChange}
             className='bg-slate-200 p-2 rounded border '
             />
             <label htmlFor="category">Category Name : </label>
-            <select id='category' name='category' value={data.category} onChange={handleOnChange}
+            <select required id='category' name='category' value={data.category} onChange={handleOnChange}
             className='bg-slate-200 p-2 rounded border '
             >
                 <option value="" >Select Category </option>
@@ -119,15 +119,15 @@ export default function UploadProduct({onclose, callProducts}) {
                 }
             </select>
             <label htmlFor="description">Description : </label>
-            <textarea rows={3}  type="text" id='description' name='description' placeholder='Enter product Description...' value={data.description} onChange={handleOnChange}
+            <textarea required rows={3}  type="text" id='description' name='description' placeholder='Enter product Description...' value={data.description} onChange={handleOnChange}
             className='bg-slate-200 p-2 rounded border '
             />
             <label htmlFor="price">Price : </label>
-            <input type="number" id='price' name='price' placeholder='Enter product Price...' value={data.price} onChange={handleOnChange}
+            <input required type="number" id='price' name='price' placeholder='Enter product Price...' value={data.price} onChange={handleOnChange}
             className='bg-slate-200 p-2 rounded border '
             />
             <label htmlFor="sellingPrice">Selling Price : </label>
-            <input type="number" id='sellingPrice' name='sellingPrice' placeholder='Enter product selling Price...' value={data.sellingPrice} onChange={handleOnChange}
+            <input required type="number" id='sellingPrice' name='sellingPrice' placeholder='Enter product selling Price...' value={data.sellingPrice} onChange={handleOnChange}
             className='bg-slate-200 p-2 rounded border '
             />
             <label htmlFor="productImage">Product Image : </label>
@@ -136,7 +136,7 @@ export default function UploadProduct({onclose, callProducts}) {
                 <div className='p-2 bg-red-100 rounded h-22 w-22 cursor-pointer flex-col flex justify-center items-center '>
                         <span className='text-4xl'><FaCloudUploadAlt /> </span>
                         <p>Upload Product Image</p>
-                        <input type="file" id='uploadImageInput' className='hidden ' onChange={handleUpoadimage}/>
+                        <input required type="file" id='uploadImageInput' className='hidden ' onChange={handleUpoadimage}/>
                     
                 </div>
                 </label>

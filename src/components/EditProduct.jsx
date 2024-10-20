@@ -90,16 +90,12 @@ export default function EditProduct({closeEdti, editProduct, callProduct}) {
         }
     }
 
-
-
-
-
   return (
     <div>
         <div className='bg-slate-100 bg-opacity-60 fixed flex justify-center items-center top-0 left-0 w-full h-full '>
         <div className='bg-white p-5 rounded w-full max-w-2xl h-full max-h-[70%] overflow-scroll'>
             <div className="flex justify-between items-center ">
-                <h2 className='font-bold text-xl'>Upload Product</h2>
+                <h2 className='font-bold text-xl'>Edit Product</h2>
                 <IoMdClose  onClick={()=>{closeEdti()} } className='cursor-pointer text-xl hover:text-red-500'/>
             </div>
 
@@ -145,7 +141,6 @@ export default function EditProduct({closeEdti, editProduct, callProduct}) {
                         <span className='text-4xl'><FaCloudUploadAlt /> </span>
                         <p>Upload Product Image</p>
                         <input type="file" id='uploadImageInput' className='hidden ' onChange={handleUpoadimage}/>
-                    
                 </div>
                 </label>
 
@@ -171,7 +166,7 @@ export default function EditProduct({closeEdti, editProduct, callProduct}) {
                     }
                 </div>
                 </div>
-                <button className='bg-red-500 rounded-full '>Upolad Product</button>
+                <button className='bg-red-500 rounded-full '>Edit Product</button>
         </form>
 
         </div>

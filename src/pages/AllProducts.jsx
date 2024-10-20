@@ -102,7 +102,6 @@ function AllProducts() {
     {
       openEditProduct &&(
         <EditProduct editProduct={editProductItem} closeEdti={()=>setOpenEditProduct(!openEditProduct)} callProduct={fetchAllProduct()} />
-
     )
     }
    
