@@ -46,7 +46,7 @@ export default function Header() {
    
 
   return (
-    <header className='h-16 shadow-md bg-white '>
+    <header className='h-16 shadow-md bg-white w-full fixed z-40 '>
         <div className='h-full container flex items-center justify-between mx-auto px-4'>
             <div>
                 <Link to={"/"}>

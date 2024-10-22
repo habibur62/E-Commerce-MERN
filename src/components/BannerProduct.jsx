@@ -66,7 +66,7 @@ function BannerProduct() {
           desktopImages.map((_, index)=>{
             return (
 
-                <button key={index} className={ currnetSlide === index ? "w-7 h-6 bg-white cursor-pointer border-none outline-none rounded-3xl " : " w-7 h-6 bg-gray-700 cursor-pointer border-none outline-none rounded-3xl "} > </button>
+                <button key={index} className={ currnetSlide === index ? "w-7 h-6 bg-white cursor-pointer border-none outline-none rounded-3xl transition-all " : " w-7 h-6 bg-gray-700 cursor-pointer border-none outline-none rounded-3xl transition-all "} > </button>
               
             )
           })
