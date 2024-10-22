@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import fetchCategoryWiseProduct from '../helpers/fetchCategoryWiseProduct'
 import {BsArrowLeftCircleFill, BsArrowRightCircleFill} from 'react-icons/bs'
+import { Link } from 'react-router-dom'
+import addToCart from '../helpers/addToCart'
 
 const HorizontalCardProduct = ({category, heading}) => {
   const [data, setData] = useState([])
@@ -45,7 +47,7 @@ const HorizontalCardProduct = ({category, heading}) => {
       {
         data.map((product, index)=>{
           return(
-            <div key={index} className='bg-white w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 rounded-sm shadow-md flex transition-all '>
+            <Link to={"product/"+product?._id} key={index} className='bg-white w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 rounded-sm shadow-md flex transition-all '>
             <div className=' min-w-[120px] md:min-w-[145px] h-full p-4 bg-slate-200'>
                 <img src={product.productImage[0]} className='object-scale-down h-full hover:scale-125 mix-blend-multiply '/>
             </div>
@@ -57,9 +59,9 @@ const HorizontalCardProduct = ({category, heading}) => {
                    <p className='text-red-500 font-bold'>{product?.sellingPrice}</p>
               </div>
 
-            <button className='bg-red-500 px-4 py-1 rounded-full hover:bg-red-700 text-white'>Add To Cart</button>
+            <button className='bg-red-500 px-2 py-1 rounded-full hover:bg-red-700 text-white' onClick={(e)=>addToCart(e,product?._id)} >Add To Cart</button>
             </div>
-           </div>
+           </Link>
 
 
           )
