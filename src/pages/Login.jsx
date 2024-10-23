@@ -20,7 +20,7 @@ export default function Login() {
 
     const navigate = useNavigate()
 
-    const {fetchUserDetails} = useContext(Context)
+    const {fetchUserDetails, countAddToCartProduct} = useContext(Context)
 
     const handleOnChange = (e) =>{
         const {name, value} = e.target
@@ -54,6 +54,7 @@ export default function Login() {
                 
                 navigate("/")
                 fetchUserDetails()
+                countAddToCartProduct()
             }
             if(dataApi.error){
                 toast.error(dataApi.message)

@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import fetchCategoryWiseProduct from '../helpers/fetchCategoryWiseProduct'
 import {BsArrowLeftCircleFill, BsArrowRightCircleFill} from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 import addToCart from '../helpers/addToCart'
+import Context from '../context'
 
 const VarticalCardProduct = ({category, heading}) => {
   const [data, setData] = useState([])
@@ -32,7 +33,12 @@ const VarticalCardProduct = ({category, heading}) => {
     scrollElement.current.scrollLeft += 300
 
   }
-
+  //add to cart count product
+  const {countAddToCartProduct} = useContext(Context)
+  const handleAddToCart = async(e, id) =>{
+    await addToCart(e,id),
+    await countAddToCartProduct()
+  }
 
   return (
     <div className='container mx-auto py-6  relative '>
@@ -60,7 +66,7 @@ const VarticalCardProduct = ({category, heading}) => {
                    <p className='text-red-500 font-bold'>{product?.sellingPrice}</p>
               </div>
 
-            <button className='bg-red-500 px-2 py-1 rounded-full hover:bg-red-700 text-white'onClick={(e)=>addToCart(e,product?._id)} >Add To Cart</button>
+            <button className='bg-red-500 px-2 py-1 rounded-full hover:bg-red-700 text-white'onClick={(e)=>handleAddToCart(e, product?._id)} >Add To Cart</button>
             </div>
            </Link>
 

@@ -5,7 +5,7 @@ import moment from 'moment'
 import { CiEdit } from "react-icons/ci";
 import EditProduct from '../components/EditProduct';
 
-function AllProducts() {
+function  AllProducts() {
   const [openUploadProduct, setopenuploadProduct] = useState(false)
   const [allProduct, setAllProduct] = useState([])
   const [openEditProduct, setOpenEditProduct] = useState(false);

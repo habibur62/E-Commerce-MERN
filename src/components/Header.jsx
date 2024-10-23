@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Logo from './Logo'
 import { FaSearch } from "react-icons/fa";
 import { FaRegUserCircle } from "react-icons/fa";
@@ -9,12 +9,15 @@ import SummaryApi from '../common';
 import { toast } from 'react-toastify';
 import { setUserDetails } from '../store/userSlice';
 import ROLE from '../common/role'
+import Context from '../context';
+
 
 export default function Header() {
     const user = useSelector(state => state?.user?.user)
    const dispatch = useDispatch()
     const [menuDisplay, setMenuDisplay] = useState(false)
     const navigate = useNavigate()
+    const context = useContext(Context)
 
 
    //logout --------------------------------------------
@@ -43,6 +46,8 @@ export default function Header() {
 
     
 
+ 
+
    
 
   return (
@@ -64,9 +69,14 @@ export default function Header() {
             <div className='flex items-center gap-7'>
                 <div className='text-3xl cursor-pointer relative'>
                      <FaShoppingCart />
-                     <div className='bg-red-600 text-white w-5 h-5 rounded-full p-1 flex items-center justify-center top-2 absolute'>
-                        <p className='text-sm'>0</p>
-                     </div>
+                     {
+                        user?._id && (
+                            <div className='bg-red-600 text-white w-5 h-5 rounded-full p-1 flex items-center justify-center top-2 absolute'>
+                                <p className='text-sm'>{context.cartProductCount}</p>
+                            </div>
+                        )
+                     }
+                     
                 </div>
                 <div className='relative flex justify-center'>
                     {

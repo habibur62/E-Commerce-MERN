@@ -35,10 +35,34 @@ function App() {
   },[])
 
 
+  const [cartProductCount, setCartProductCount] = useState(0)
+  //count add to cart product '
+  const countAddToCartProduct = async() =>{
+      try {
+          const response = await fetch(SummaryApi.countAddToCartProduct.url,{
+              method : SummaryApi.countAddToCartProduct.method,
+              credentials: 'include',
+          })
+
+          const dataResponse = await response.json()
+          setCartProductCount(dataResponse.data.count)
+
+      } catch (error) {
+          console.log("Error occure during count product:", error)
+      }
+  }
+  
+  useEffect(()=>{
+      countAddToCartProduct()
+  },[])
+
+
   return (
     <>
      <Context.Provider value ={{
-       fetchUserDetails // user details sets
+       fetchUserDetails, // user details sets
+       cartProductCount, //user add to cart product count
+       countAddToCartProduct //add to cart product add
      }} >
       
       <Header/>

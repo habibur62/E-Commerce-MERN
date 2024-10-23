@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import SummaryApi from '../common'
 import { useParams } from 'react-router-dom'
 import { FaStar, FaStarHalf } from "react-icons/fa";
 import CategoryWiseProductDisplay from '../components/CategoryWiseProductDisplay';
+import Context from '../context';
+import addToCart from '../helpers/addToCart';
 
 export default function ProductDetails() {
 
@@ -50,7 +52,7 @@ export default function ProductDetails() {
 
     useEffect(()=>{
         fetchProductDetails()
-    },[])
+    },[param?.id])
 
     const handleMouseInterProduct = (imgUrl) =>{
         setActiveImage(imgUrl)
@@ -66,6 +68,14 @@ export default function ProductDetails() {
 
         setZoomImageCoordinate({x,y})
     }
+
+    //add to cart count
+    const {countAddToCartProduct} = useContext(Context)
+    const handleAddToCart = async(e, id) =>{
+         await addToCart(e,id),
+         await countAddToCartProduct()
+     }
+
 
   return (
     <div className='container mx-auto p-4 '>
@@ -110,8 +120,8 @@ export default function ProductDetails() {
                     
                     {
                         zoomImage && (
-                            <div className='hidden lg:block absolute min-w-[500px] min-h-[500px] overflow-hidden bg-slate-200 p-1 top-0 -right-[510px]  '>
-                        <div className='w-full h-full min-w-[400px] min-h-[400px] mix-blend-multiply scale-150 '
+                            <div className='hidden lg:block absolute min-w-[500px] min-h-[400px] overflow-hidden bg-slate-200 p-1 top-0 -right-[510px]  '>
+                        <div className='w-full h-full min-w-[350px] min-h-[350px] mix-blend-multiply scale-125'
                             style={{
                                 backgroundImage: `url(${activeImage})`,
                                 backgroundRepeat: 'no-repeat',
@@ -174,7 +184,7 @@ export default function ProductDetails() {
                 </div>
                 <div className='gap-2 flex items-center my-1 '>
                     <button className='border-2 border-red-500 px-3 py-1 font-medium rounded min-w-[120px] hover:bg-red-500 hover:text-white transition-all '>Buy</button>
-                    <button  className='border-2 border-red-500 bg-red-500 px-3 py-1 font-medium rounded text-white min-w-[120px] hover:bg-white hover:text-red-500 transition-all '>Add to Cart</button>
+                    <button  className='border-2 border-red-500 bg-red-500 px-3 py-1 font-medium rounded text-white min-w-[120px] hover:bg-white hover:text-red-500 transition-all ' onClick={(e)=>handleAddToCart(e, data?._id)}>Add to Cart</button>
                 </div>
                 <div className='my-2 '>
                     <p className='font-bold '>Description:</p>
