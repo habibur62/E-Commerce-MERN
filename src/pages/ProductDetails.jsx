@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import SummaryApi from '../common'
 import { useParams } from 'react-router-dom'
 import { FaStar, FaStarHalf } from "react-icons/fa";
+import CategoryWiseProductDisplay from '../components/CategoryWiseProductDisplay';
 
 export default function ProductDetails() {
 
@@ -184,6 +185,12 @@ export default function ProductDetails() {
             }
             
         </div>
+        {
+            data.category && (
+                <CategoryWiseProductDisplay category={data.category} heading={"Recommended Products"} />
+
+            )
+        }
     </div>
   )
 }
