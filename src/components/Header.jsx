@@ -67,7 +67,7 @@ export default function Header() {
                 </div>
             </div>
             <div className='flex items-center gap-7'>
-                <div className='text-3xl cursor-pointer relative'>
+                <Link to={"cart/"} className='text-3xl cursor-pointer relative'>
                      <FaShoppingCart />
                      {
                         user?._id && (
@@ -77,7 +77,7 @@ export default function Header() {
                         )
                      }
                      
-                </div>
+                </Link>
                 <div className='relative flex justify-center'>
                     {
                         user?._id &&(
