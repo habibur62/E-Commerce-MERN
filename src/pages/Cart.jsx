@@ -90,7 +90,34 @@ const Cart = () => {
     }
 
     const deleteCartProduct = async(id) =>{
-        console.log(id)
+        const response = await fetch(SummaryApi.deleteAddToCartProduct.url,{
+            method: SummaryApi.deleteAddToCartProduct.method,
+            credentials: 'include',
+            headers : {
+                "content-type" : "application/json"
+            },
+            body : JSON.stringify(
+                {   productId: id, 
+                }
+            )
+        })
+         // Check if the response is okay (status 200-299)
+         if (!response.ok) {
+            throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+        if (response.status === 204) {
+            console.log("Product deleted successfully, but no content returned.");
+            setData(prevData => prevData.filter(product => product.productId._id !== id));
+            return; // Exit the function since there's no JSON to parse
+        }
+        const responseData = await response.json();
+
+        if (responseData.success) {
+            // Update the state directly instead of calling fetchCartProduct
+            setData(prevData => prevData.filter(product => product.productId._id !== id));
+        }else {
+            console.error(responseData.message); // Log the error message from the response
+        }
     }
 
 

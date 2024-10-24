@@ -65,9 +65,13 @@ const SummaryApi = {
      updateAddToCartProduct : {
         url : `${backendDomin}/api/update-cart-product`,
         method: "put"
+     },
+     deleteAddToCartProduct : {
+        url : `${backendDomin}/api/delete-cart-product`,
+        method: "delete"
      }
 
-
+     
      
 }
 
