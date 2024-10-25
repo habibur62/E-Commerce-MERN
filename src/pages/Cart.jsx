@@ -88,6 +88,7 @@ const Cart = () => {
             }
         }
     }
+    
 
     const deleteCartProduct = async(id) =>{
         const response = await fetch(SummaryApi.deleteAddToCartProduct.url,{
@@ -106,8 +107,8 @@ const Cart = () => {
             throw new Error(`Error: ${response.status} ${response.statusText}`);
         }
         if (response.status === 204) {
-            console.log("Product deleted successfully, but no content returned.");
             setData(prevData => prevData.filter(product => product.productId._id !== id));
+            context.countAddToCartProduct()
             return; // Exit the function since there's no JSON to parse
         }
         const responseData = await response.json();
@@ -115,11 +116,14 @@ const Cart = () => {
         if (responseData.success) {
             // Update the state directly instead of calling fetchCartProduct
             setData(prevData => prevData.filter(product => product.productId._id !== id));
+            
         }else {
             console.error(responseData.message); // Log the error message from the response
         }
     }
 
+    const totalQuantity = data.reduce((acc, product) => acc + product.quantity, 0);
+    const totalPrice = data.reduce((acc, product) => acc + product.productId.sellingPrice * product.quantity, 0);
 
 
   return (
@@ -145,7 +149,7 @@ const Cart = () => {
                     ) : (
                         data.map((product, index)=>{
                             return(
-                                <div key={index} className='relative w-full bg-white h-32 my-2 border border-slate-300 rounded grid grid-cols-3 gap-2 '>
+                                <div key={index} className='relative w-full bg-white h-32 my-2 border border-slate-300 rounded flex gap-2 '>
                                     <div className='w-32 h-32 bg-slate-200 flex justify-center items-center '>
                                         <img src={product?.productId?.productImage[0]} className='w-ful h-full p-2 object-scale-down mix-blend-multiply' />
                                     </div>
@@ -156,18 +160,20 @@ const Cart = () => {
                                         
                                         <h2 className='capitalize text-2xl line-clamp-1 '>{product?.productId?.productName}</h2>
                                         <p>{product?.productId?.category}</p>
-                                        <p className='text-red-500 font-bold '>{product?.productId?.sellingPrice}</p>
+                                        <div className='flex '>
+                                            <p className='text-red-500 font-bold '>{product?.productId?.sellingPrice}</p>
+
+                                            <p className='text-red-500 text-xl right-0 absolute '>
+                                            Total: {product?.quantity * product?.productId?.sellingPrice}
+                                            </p>
+                                        </div>
                                         <div className='flex items-center gap-2 '>
                                             <button onClick={()=>decreaseQty(product?.productId?._id, product?.quantity)} className='px-2 border-2 border-slate-300 font-bold text-2xl hover:bg-red-400 transition-all '>-</button>
                                             <p>{product?.quantity}</p>
                                             <button onClick={()=>{  increaseQty(product?.productId?._id, product?.quantity)}} className='px-2 border-2 border-slate-300 font-bold text-2xl hover:bg-red-400 transition-all '>+</button>
                                         </div>
                                     </div>
-                                    <div className='text-left'>
-                                        <p className='text-red-500 text-xl '>
-                                            Total: {product?.quantity * product?.productId?.sellingPrice}
-                                        </p>
-                                    </div>
+
                                 </div>
                             )
                         })
@@ -182,8 +188,21 @@ const Cart = () => {
                         
                     </div>
                 ) : (
-                    <div className='h-36 bg-slate-200 border border-slate-300 animate-pulse '>
-                        total
+                    <div className='h-45 bg-white border rounded border-slate-300 p-2 '>
+                        <h2 className='bg-red-500 font-bold text-xl p-1 rounded'>Order Summary</h2>
+                        <div className='flex justify-between my-2'>
+                            <p>Subtotal({totalQuantity} items)</p>
+                            <p>{totalPrice}</p>
+                        </div>
+                        <div className='flex justify-between my-2'>
+                            <p>Shipping Fee</p>
+                            <p>150</p>
+                        </div>
+                        <div className='flex justify-between items-center'>
+                            <p>Total</p>
+                             <h2 className='text-xl text-right '>{totalPrice+150}</h2>
+                        </div>
+                        <button className='bg-red-500 w-full rounded text-white py-1'>PROCEED TO CHECKOUT</button>
                     </div>
                 )
             }
