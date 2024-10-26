@@ -74,10 +74,6 @@ const HorizontalCardProduct = ({category, heading}) => {
         })
       }
        </div>
-      
-
-
-
     </div>
   )
 }

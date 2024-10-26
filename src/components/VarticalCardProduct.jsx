@@ -75,10 +75,6 @@ const VarticalCardProduct = ({category, heading}) => {
         })
       }
        </div>
-      
-
-
-
     </div>
   )
 }
