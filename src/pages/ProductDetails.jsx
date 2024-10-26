@@ -80,10 +80,10 @@ export default function ProductDetails() {
   return (
     <div className='container mx-auto p-4 '>
 
-        <div className=' min-h-[200px] flex'>
-            <div className='flex flex-col-reverse lg:flex-row gap-4 '> 
+        <div className=' min-h-[200px] md:flex'>
+            <div className='flex justify-center items-center flex-col-reverse lg:flex-row gap-4  '> 
 
-                <div className='h-full '>
+                <div className='h-full'>
                     {
                         loading ? (
                             <div className='flex gap-2 lg:flex-col h-full overflow-scroll custom-scroll-none' >
@@ -113,7 +113,7 @@ export default function ProductDetails() {
                         )
                     }
                 </div>
-                <div className='h-[300px] w-[340px] lg:h-96 lg:w-96 bg-slate-200 relative '>
+                <div className='h-[300px] w-[340px] lg:h-96 lg:w-96 bg-slate-200 relative  '>
                     <img src={activeImage} className='h-full w-full object-scale-down mix-blend-multiply' onMouseMove={handleZoomImage} onMouseLeave={()=>setZoomImage(!zoomImage)} />
 
                     {/***product zoom  */}
@@ -138,10 +138,6 @@ export default function ProductDetails() {
 
                 </div>
             </div>
-            <div>
-                
-            </div>
-
             {
                 loading ? (
                     <div className='p-4 '>
@@ -167,7 +163,7 @@ export default function ProductDetails() {
 
                 ) : (
 
-                <div className='p-4 '>
+            <div className='p-4  '>
                 <p className='bg-red-200 text-red-600 px-2 rounded-full w-fit '>{data.brandName}</p>
                 <h2 className='text-2xl lg:text-4xl font-medium capitalize '>{data.productName}</h2>
                 <p className='text-slate-400  capitalize '>{data.category}</p>

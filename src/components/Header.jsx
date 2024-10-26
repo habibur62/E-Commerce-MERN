@@ -3,7 +3,7 @@ import Logo from './Logo'
 import { FaSearch } from "react-icons/fa";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import SummaryApi from '../common';
 import { toast } from 'react-toastify';
@@ -18,7 +18,8 @@ export default function Header() {
     const [menuDisplay, setMenuDisplay] = useState(false)
     const navigate = useNavigate()
     const context = useContext(Context)
-
+    const serachInput = useLocation()
+    const [search, setSearch] = useState(serachInput?.search.split("=")[1])
 
    //logout --------------------------------------------
      const handleLogOut = async () =>{
@@ -44,7 +45,16 @@ export default function Header() {
                 
     }
 
-    
+    const handleSearch = (e) =>{
+        const {value} = e.target
+        setSearch(value)
+        if(value){
+            navigate(`/search?q=${value}`)
+        }else{
+            navigate(`/search`)
+
+        }
+    }
 
  
 
@@ -60,8 +70,8 @@ export default function Header() {
                 </Link>
             </div>
 
-            <div className='hidden  lg:flex items-center w-full justify-between max-w-sm border rounded-full focus-within:shadow-md pl-2 '>
-                <input type="text" placeholder='search your product...' className='w-full outline-none '/>
+            <div className='  flex items-center w-full justify-between max-w-sm border rounded-full focus-within:shadow-md pl-2 '>
+                <input type="text" placeholder='search your product...' className='w-full outline-none' value={search} onChange={handleSearch}/>
                 <div className='text-lg items-center min-w-[50px] h-8 bg-red-600 flex justify-center rounded-r-full text-white'> 
                       <FaSearch /> 
                 </div>

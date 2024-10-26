@@ -13,7 +13,9 @@ const fetchCategoryWiseProduct = async (category) =>{
                 category : category
             })
         })
-
+        if (!fetchProduct.ok) {
+            throw new Error(`Error: ${fetchProduct.statusText}`);
+        }
         const dataResponse = await fetchProduct.json()
 
 

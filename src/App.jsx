@@ -27,7 +27,7 @@ function App() {
 
     if(dataApi){
 
-      dispatch(setUserDetails(dataApi.data))
+      dispatch(setUserDetails(dataApi?.data))
     }
   }
   useEffect(()=>{
@@ -45,7 +45,9 @@ function App() {
           })
 
           const dataResponse = await response.json()
-          setCartProductCount(dataResponse.data.count)
+          const productCount = dataResponse?.data?.count || 0;
+
+          setCartProductCount(productCount)
 
       } catch (error) {
           console.log("Error occure during count product:", error)

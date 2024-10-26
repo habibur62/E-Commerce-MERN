@@ -4,6 +4,7 @@ import {BsArrowLeftCircleFill, BsArrowRightCircleFill} from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 import addToCart from '../helpers/addToCart'
 import Context from '../context'
+import scrollTop from '../helpers/scrollTop'
 
 const CategoryWiseProductDisplay = ({category, heading}) => {
   const [data, setData] = useState([])
@@ -35,13 +36,13 @@ const CategoryWiseProductDisplay = ({category, heading}) => {
     <div className='container mx-auto py-6  relative '>
       <h1 className='text-2xl font-semibold py-2 '>{heading}</h1>
 
-      <div className='grid grid-cols-[repeat(auto-fit,minmax(300px,320px))] gap-4 justify-between  md:gap-6 overflow-scroll custom-scroll-none transition-all'>
+      <div className='grid grid-cols-[repeat(auto-fit,minmax(300px,320px))] gap-4 justify-center md:justify-between  md:gap-6 overflow-scroll custom-scroll-none transition-all'>
     
       {
         data.map((product, index)=>{
           return(
             
-            <Link to={"/product/"+product?._id} key={index} className='bg-white w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px]  rounded-sm shadow-md '>
+            <Link to={"/product/"+product?._id} key={index} className='bg-white w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px]  rounded-sm shadow-md ' onClick={scrollTop}>
             <div className=' min-w-[120px] md:min-w-[145px] h-48 p-4 bg-slate-200 flex justify-center items-center '>
                 <img src={product.productImage[0]} className='object-scale-down h-full hover:scale-110 mix-blend-multiply '/>
             </div>
@@ -63,9 +64,6 @@ const CategoryWiseProductDisplay = ({category, heading}) => {
       }
        </div>
       
-
-
-
     </div>
   )
 }
