@@ -57,7 +57,8 @@ function App() {
   useEffect(()=>{
       countAddToCartProduct()
   },[])
-
+  	
+  
 
   return (
     <>

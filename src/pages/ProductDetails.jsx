@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import SummaryApi from '../common'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { FaStar, FaStarHalf } from "react-icons/fa";
 import CategoryWiseProductDisplay from '../components/CategoryWiseProductDisplay';
 import Context from '../context';
@@ -28,7 +28,7 @@ export default function ProductDetails() {
         y : 0
     })
     const[zoomImage, setZoomImage] =useState(false)
-
+    const navigate = useNavigate()
 
     const fetchProductDetails = async() =>{
         setLoading(true)
@@ -75,7 +75,12 @@ export default function ProductDetails() {
          await addToCart(e,id),
          await countAddToCartProduct()
      }
-
+     //buy product 
+     const handlebuyProduct = async(e, id) =>{
+        await addToCart(e,id),
+        await countAddToCartProduct()
+        navigate("/cart")
+    }
 
   return (
     <div className='container mx-auto p-4 '>
@@ -179,7 +184,7 @@ export default function ProductDetails() {
                     <p className='line-through text-slate-400  '>{data.price}</p>
                 </div>
                 <div className='gap-2 flex items-center my-1 '>
-                    <button className='border-2 border-red-500 px-3 py-1 font-medium rounded min-w-[120px] hover:bg-red-500 hover:text-white transition-all '>Buy</button>
+                    <button className='border-2 border-red-500 px-3 py-1 font-medium rounded min-w-[120px] hover:bg-red-500 hover:text-white transition-all '  onClick={(e)=>handlebuyProduct(e, data?._id)}>Buy</button>
                     <button  className='border-2 border-red-500 bg-red-500 px-3 py-1 font-medium rounded text-white min-w-[120px] hover:bg-white hover:text-red-500 transition-all ' onClick={(e)=>handleAddToCart(e, data?._id)}>Add to Cart</button>
                 </div>
                 <div className='my-2 '>

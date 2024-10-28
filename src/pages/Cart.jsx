@@ -125,6 +125,38 @@ const Cart = () => {
     const totalQuantity = data.reduce((acc, product) => acc + product.quantity, 0);
     const totalPrice = data.reduce((acc, product) => acc + product.productId.sellingPrice * product.quantity, 0);
 
+    //payment
+    const initiatePayment = async (total) => {
+    setLoading(true);
+    try {
+      const response = await fetch(SummaryApi.payment.url, {
+        method: SummaryApi.payment.method,
+        credentials: 'include',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          totalAmount: total, // Total payment amount
+          customerName: "John Doe",
+          email: "john@example.com",
+          phone: "017xxxxxxxx",
+          address: "Dhaka, Bangladesh",
+        }),
+      });
+      const data = await response.json();
+
+      if (data.GatewayPageURL) {
+        setTimeout(() => {
+            window.location.href = data.GatewayPageURL;
+          }, 100);
+      } else {
+        alert("Failed to initialize payment");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred during payment initialization");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className='container mx-auto'>
@@ -202,7 +234,7 @@ const Cart = () => {
                             <p>Total</p>
                              <h2 className='text-xl text-right '>{totalPrice+150}</h2>
                         </div>
-                        <button className='bg-red-500 w-full rounded text-white py-1'>PROCEED TO CHECKOUT</button>
+                        <button className='bg-red-500 w-full rounded text-white py-1' onClick={()=>initiatePayment(totalPrice+150)} >PROCEED TO CHECKOUT</button>
                     </div>
                 )
             }

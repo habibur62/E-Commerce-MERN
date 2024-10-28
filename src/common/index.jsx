@@ -73,10 +73,18 @@ const SummaryApi = {
      searchProduct : {
         url : `${backendDomin}/api/search`,
         method: "get"
+     },
+     payment : {
+        url : `${backendDomin}/api/checkout`,
+        method: "post"
+     },
+     successPayment : {
+        url : `${backendDomin}/api/success`,
+        method: "post"
      }
 
      
-
+     
      
 }
 
